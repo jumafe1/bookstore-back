@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080"
 export async function getAuthors(): Promise<Author[]> {
   const res = await fetch(`${BASE_URL}/api/authors`, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to fetch authors: ${res.status}`);
-  // Backend returns java.util.Date as epoch ms or ISO depending on config; cast to string here.
+
   const data = (await res.json()) as Array<{
     id: number;
     birthDate: string | number | null;
