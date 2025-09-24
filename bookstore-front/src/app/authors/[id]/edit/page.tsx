@@ -2,10 +2,11 @@ import { notFound, redirect } from "next/navigation";
 import { getAuthor, updateAuthor } from "@/lib/api";
 import AuthorForm, { AuthorInput } from "@/app/components/AuthorForm";
 
-type Props = { params: { id: string } };
+type Props = { params: Promise<{ id: string }> };
 
 export default async function EditAuthorPage({ params }: Props) {
-  const id = Number(params.id);
+  const { id: idStr } = await params;
+  const id = Number(idStr);
   if (Number.isNaN(id)) return notFound();
 
   const author = await getAuthor(id).catch(() => null);
